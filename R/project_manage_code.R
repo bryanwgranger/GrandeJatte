@@ -12,6 +12,7 @@
 #' @examples
 #' CreateProjectDirectory("smith", "/Users/asmith01/projects")
 #' CreateProjectDirectory("miller", "~/projects")
+#' @export
 CreateProjectDirectory <- function(project_title, home_directory){
 
   main_paths <- list(input_path = paste0(home_directory, "/", project_title, "/input_data/"), 
@@ -78,6 +79,7 @@ SaveSeurat <- function(seurat_obj, seurat_filename, most_recent = TRUE) {
 #' @return A Seurat object
 #' @examples
 #' OpenLastSeurat()
+#' @export
 OpenLastSeurat <- function() {
   y_file_path <- "config/project_config.yml"
   config_file <- yaml.load_file(y_file_path)
@@ -103,9 +105,11 @@ OpenLastSeurat <- function() {
 #' @param width A number
 #' @param height A number
 #' @return NULL
+#' @importFrom ggplot2 ggsave last_plot
 #' @examples
 #' SaveViz("qc", "percent_mito.pdf", width = 10, height = 10)
 #' SaveViz("other", "bar_plot.png", plot = p1)
+#' @export
 SaveViz <- function(category, filename, plot = last_plot(), width = 7, height = 7) {
   y_file_path <- "config/project_config.yml"
   config_file <- yaml.load_file(y_file_path)
@@ -135,9 +139,11 @@ SaveViz <- function(category, filename, plot = last_plot(), width = 7, height = 
 #' @param width A number
 #' @param height A number
 #' @return NULL
+#' @importFrom ggplot2 ggsave last_plot
 #' @examples
 #' SaveVizQC("percent_mito.pdf", width = 10, height = 10)
 #' SaveVizQC("bar_plot.png", plot = p1)
+#' @export
 SaveVizQC <- function(filename, plot = last_plot(), width = 7, height = 7) {
   y_file_path <- "config/project_config.yml"
   config_file <- yaml.load_file(y_file_path)
@@ -153,9 +159,11 @@ SaveVizQC <- function(filename, plot = last_plot(), width = 7, height = 7) {
 #' @param width A number
 #' @param height A number
 #' @return NULL
+#' @importFrom ggplot2 ggsave last_plot
 #' @examples
 #' SaveVizCluster("umap_.pdf", width = 10, height = 10)
 #' SaveVizCluster("tsne_plot.png", plot = p1)
+#' @export
 SaveVizCluster <- function(filename, plot = last_plot(), width = 7, height = 7) {
   y_file_path <- "config/project_config.yml"
   config_file <- yaml.load_file(y_file_path)
@@ -171,9 +179,11 @@ SaveVizCluster <- function(filename, plot = last_plot(), width = 7, height = 7) 
 #' @param width A number
 #' @param height A number
 #' @return NULL
+#' @importFrom ggplot2 ggsave last_plot
 #' @examples
 #' SaveVizDE("top_genes.pdf", width = 10, height = 10)
 #' SaveVizDE("downregulated_genes.png", plot = p1)
+#' @export
 SaveVizDE <- function(filename, plot = last_plot(), width = 7, height = 7) {
   y_file_path <- "config/project_config.yml"
   config_file <- yaml.load_file(y_file_path)

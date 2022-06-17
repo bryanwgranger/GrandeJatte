@@ -1,5 +1,8 @@
 notebook*
 
+*.Rproj
+.Rbuildignore
+
 # History files
 .Rhistory
 .Rapp.history

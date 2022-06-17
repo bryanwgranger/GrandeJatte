@@ -1,0 +1,26 @@
+{
+    "id": "7BA4A43E",
+    "path": "~/biocm/r_tools/grandeJatte/R/project_manage_code.R",
+    "project_path": "R/project_manage_code.R",
+    "type": "r_source",
+    "hash": "755966167",
+    "contents": "",
+    "dirty": false,
+    "created": 1655490700225.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "175,33",
+        "scrollLine": "160"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1655491338,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1655491338861,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -60,7 +60,7 @@ CreateProjectDirectory <- function(project_title, home_directory, template_file_
   
   #save as a new YAML file
   config_dir <- new_config[['main_paths']][['config']]
-  write_yaml(new_config, file = paste0(config_dir, "/", project_title, '_config.yml'))
+  write_yaml(new_config, file = paste0(config_dir, "/project_config.yml"))
   
   cat("Project directory created.")
 }

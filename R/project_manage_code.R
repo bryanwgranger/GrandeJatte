@@ -65,6 +65,24 @@ CreateProjectDirectory <- function(project_title, home_directory, template_file_
   cat("Project directory created.")
 }
 
+#' Create a default template
+#'
+#' @param home_directory A file path
+#' @importFrom yaml write_yaml
+#' @examples
+#' CreateTemplate("/Users/asmith01/projects")
+#' CreateTemplate("~/projects")
+#' @export
+CreateTemplate <- function(home_directory){
+  default_template = list(
+    base_fields = list('project_title', 'home_directory', 'project_directory', 'samples', 'most_recent_seurat'),
+    main_paths = list('main_analysis', 'config', 'input_path', 'scripts', 'seurat_objects'),
+    analysis_paths = list('cell_type', 'differential_expression', 'viz_qc', 'viz_clustering',
+                          'trajectory', 'markers', 'other'))
+  write_yaml(default_template, file = paste0(home_directory, "/grandejatte_template.yml"))
+  cat("Template YML file written to ", home_directory, "/grandejatte_template.yml")
+}
+
 #LoadSavePaths <- function() {
 #  y_file_path <- "config/project_config.yml"
 #  data <- yaml.load_file(y_file_path)

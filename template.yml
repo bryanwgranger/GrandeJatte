@@ -10,8 +10,6 @@ main_paths:
   - input_path
   - scripts
   - seurat_objects
-  - random_folder
-  - random_different_folder
 analysis_paths:
   - cell_type
   - differential_expression

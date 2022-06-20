@@ -4,10 +4,18 @@
 \alias{CreateProjectDirectory}
 \title{Create a project directory}
 \usage{
-CreateProjectDirectory(project_title, home_directory)
+CreateProjectDirectory(
+  project_title,
+  home_directory,
+  template_file_path = "none"
+)
 }
 \arguments{
-\item{project_title}{A file path}
+\item{project_title}{A string}
+
+\item{home_directory}{A file path}
+
+\item{template_file_path}{A file path}
 }
 \description{
 Create a project directory

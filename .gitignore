@@ -3,6 +3,8 @@ notebook*
 *.Rproj
 .Rbuildignore
 .DS_Store
+
+template_config.yml
 # History files
 .Rhistory
 .Rapp.history

@@ -7,8 +7,10 @@
 #' Create a project directory
 #'
 #' @param project_title A string
-#' @param project_title A file path
+#' @param home_directory A file path
+#' @param template_file_path A file path
 #' @return NULL
+#' @importFrom yaml write_yaml yaml.load_file
 #' @examples
 #' CreateProjectDirectory("smith", "/Users/asmith01/projects")
 #' CreateProjectDirectory("miller", "~/projects")
@@ -73,6 +75,7 @@ CreateProjectDirectory <- function(project_title, home_directory, template_file_
 #' @param seurat_obj A Seurat object
 #' @param seurat_filename A filename ending in .rds
 #' @param most_recet A boolean
+#' @importFrom yaml yaml.load_file
 #' @return NULL
 #' @examples
 #' SaveSeurat(seurat, "05_smith_diff_exp.rds", most_recent = TRUE)
@@ -91,6 +94,7 @@ SaveSeurat <- function(seurat_obj, seurat_filename, most_recent = TRUE) {
 #' Opens the most recently saved Seurat using the SaveSeurat function
 #'
 #' @return A Seurat object
+#' @importFrom yaml yaml.load_file
 #' @examples
 #' OpenLastSeurat()
 #' @export
@@ -120,6 +124,7 @@ OpenLastSeurat <- function() {
 #' @param height A number
 #' @return NULL
 #' @importFrom ggplot2 ggsave last_plot
+#' @importFrom yaml yaml.load_file
 #' @examples
 #' SaveViz("qc", "percent_mito.pdf", width = 10, height = 10)
 #' SaveViz("other", "bar_plot.png", plot = p1)
@@ -154,6 +159,7 @@ SaveViz <- function(category, filename, plot = last_plot(), width = 7, height = 
 #' @param height A number
 #' @return NULL
 #' @importFrom ggplot2 ggsave last_plot
+#' @importFrom yaml yaml.load_file
 #' @examples
 #' SaveVizQC("percent_mito.pdf", width = 10, height = 10)
 #' SaveVizQC("bar_plot.png", plot = p1)
@@ -174,6 +180,7 @@ SaveVizQC <- function(filename, plot = last_plot(), width = 7, height = 7) {
 #' @param height A number
 #' @return NULL
 #' @importFrom ggplot2 ggsave last_plot
+#' @importFrom yaml yaml.load_file
 #' @examples
 #' SaveVizCluster("umap_.pdf", width = 10, height = 10)
 #' SaveVizCluster("tsne_plot.png", plot = p1)
@@ -194,6 +201,7 @@ SaveVizCluster <- function(filename, plot = last_plot(), width = 7, height = 7) 
 #' @param height A number
 #' @return NULL
 #' @importFrom ggplot2 ggsave last_plot
+#' @importFrom yaml yaml.load_file
 #' @examples
 #' SaveVizDE("top_genes.pdf", width = 10, height = 10)
 #' SaveVizDE("downregulated_genes.png", plot = p1)

@@ -13,39 +13,53 @@
 #' CreateProjectDirectory("smith", "/Users/asmith01/projects")
 #' CreateProjectDirectory("miller", "~/projects")
 #' @export
-CreateProjectDirectory <- function(project_title, home_directory){
-
-  main_paths <- list(input_path = paste0(home_directory, "/", project_title, "/input_data/"), 
-                     input_path_counts = paste0(home_directory, "/", project_title, "/input_data/count"),
-                     main_analysis = paste0(home_directory, "/", project_title, "/main_analysis"), 
-                     seurat_objects = paste0(home_directory, "/", project_title, "/seurat_objects"), 
-                     scripts = paste0(home_directory, "/", project_title, "/scripts"),
-                     config = paste0(home_directory, "/", project_title, "/config"))
-  
-  for (directory in main_paths) {
-    if(!dir.exists(directory)){dir.create(directory,recursive = T)} 
-  }
-
-  analysis_paths <- list(cell_type = paste0(main_paths$main_analysis, "/cell_type"), 
-                              diff_exp = paste0(main_paths$main_analysis, "/differential_expression"), 
-                              viz_qc = paste0(main_paths$main_analysis, "/viz_qc"), 
-                              viz_clustering = paste0(main_paths$main_analysis, "/viz_clustering"), 
-                              trajectory = paste0(main_paths$main_analysis, "/trajectory"),
-                              markers = paste0(main_paths$main_analysis, "/markers"),
-                              rna_velocity = paste0(main_paths$main_analysis, "/rna_velocity"))
-  
-  for (directory in analysis_paths) {
-    if(!dir.exists(directory)){dir.create(directory,recursive = T)} 
+CreateProjectDirectory <- function(project_title, home_directory, template_file_path = "none") {
+  if (template_file_path == 'none') {
+    template_file_path <- 'template.yml'
   }
   
-  #CREATE YAML FILE
-  yml <- list(project_title = project_title,
-              home_directory = home_directory,
-              project_directory = paste0(home_directory, "/", project_title),
-              main_paths = main_paths,
-              analysis_paths = analysis_paths)
-  write_yaml(yml, file = paste0(main_paths$config, '/project_config.yml'))
-  cat('Project YAML file created at', main_paths$config)
+  template_file <- yaml.load_file(template_file_path)
+  
+  new_config = list()
+  
+  # Start with base_fields
+  new_config[['project_title']] = project_title
+  new_config[['home_directory']] = home_directory
+  
+  if ("project_directory" %in% template_file$base_fields) {
+    new_config[['project_directory']] = paste0(home_directory, "/", project_title)
+  }
+  
+  # temporarily set other base fields to undefined. These will be updated later.
+  for (field in template_file$base_fields) {
+    if (!(field %in% c('project_title', 'home_directory', 'project_directory'))){
+      new_config[[field]] = "undefined"
+    }
+  }
+  
+  # Parse and create main_paths
+  main_paths_list <- list()
+  project_dir <- new_config[["project_directory"]]
+  for (path in template_file$main_paths){
+    main_paths_list[[path]] = paste0(project_dir, "/", path)
+  }
+  new_config[['main_paths']] <- main_paths_list
+  
+  CreateDirectories(new_config[['main_paths']])
+  
+  # Parse and create analysis paths
+  analysis_paths_list <- list()
+  for (path in template_file$analysis_paths){
+    analysis_paths_list[[path]] = paste0(project_dir, "/main_analysis/", path)
+  }
+  new_config[['analysis_paths']] <- analysis_paths_list
+  CreateDirectories(new_config[['analysis_paths']])
+  
+  #save as a new YAML file
+  config_dir <- new_config[['main_paths']][['config']]
+  write_yaml(new_config, file = paste0(config_dir, "/", project_title, '_config.yml'))
+  
+  cat("Project directory created.")
 }
 
 #LoadSavePaths <- function() {

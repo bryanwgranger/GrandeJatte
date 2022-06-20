@@ -7,14 +7,14 @@ This R package is a small organizational tool to be used in conjuction with Seur
 
 GrandeJatte currently requires the following packages:
 
-'''
+```
 ggplot2
 yaml
-'''
+```
 
 To install GrandeJatte, please do so via devtools:
 
 
-'''
+```
 devtools::install_github("bryanwgranger/GrandeJatte")
-'''
+```

@@ -8,18 +8,15 @@
 #'
 #' @param project_title A string
 #' @param home_directory A file path
-#' @param template_file_path A file path
+#' @param template_file_path A file path to yml file
 #' @return NULL
 #' @importFrom yaml write_yaml yaml.load_file
 #' @examples
 #' CreateProjectDirectory("smith", "/Users/asmith01/projects")
 #' CreateProjectDirectory("miller", "~/projects")
 #' @export
-CreateProjectDirectory <- function(project_title, home_directory, template_file_path = "none") {
-  if (template_file_path == 'none') {
-    template_file_path <- 'template.yml'
-  }
-  
+CreateProjectDirectory <- function(project_title, home_directory, template_file_path) {
+
   template_file <- yaml.load_file(template_file_path)
   
   new_config = list()
@@ -47,7 +44,9 @@ CreateProjectDirectory <- function(project_title, home_directory, template_file_
   }
   new_config[['main_paths']] <- main_paths_list
   
-  CreateDirectories(new_config[['main_paths']])
+  for (directory in main_paths_list) {
+    if(!dir.exists(directory)){dir.create(directory,recursive = T)} 
+  }
   
   # Parse and create analysis paths
   analysis_paths_list <- list()
@@ -55,7 +54,9 @@ CreateProjectDirectory <- function(project_title, home_directory, template_file_
     analysis_paths_list[[path]] = paste0(project_dir, "/main_analysis/", path)
   }
   new_config[['analysis_paths']] <- analysis_paths_list
-  CreateDirectories(new_config[['analysis_paths']])
+  for (directory in analysis_paths_list) {
+    if(!dir.exists(directory)){dir.create(directory,recursive = T)} 
+  }
   
   #save as a new YAML file
   config_dir <- new_config[['main_paths']][['config']]

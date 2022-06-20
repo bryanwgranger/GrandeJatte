@@ -187,7 +187,7 @@ SaveVizQC <- function(filename, plot = last_plot(), width = 7, height = 7) {
   y_file_path <- "config/project_config.yml"
   config_file <- yaml.load_file(y_file_path)
   save_dir = config_file$analysis_paths$viz_qc
-  ggsave(paste0(save_dir, "/", filename, width = width, height = height))
+  ggsave(paste0(save_dir, "/", filename), width = width, height = height)
   
 }
 
@@ -208,7 +208,7 @@ SaveVizCluster <- function(filename, plot = last_plot(), width = 7, height = 7) 
   y_file_path <- "config/project_config.yml"
   config_file <- yaml.load_file(y_file_path)
   save_dir = config_file$analysis_paths$viz_clustering
-  ggsave(paste0(save_dir, "/", filename, width = width, height = height))
+  ggsave(paste0(save_dir, "/", filename), width = width, height = height)
   
 }
 
@@ -229,7 +229,7 @@ SaveVizDE <- function(filename, plot = last_plot(), width = 7, height = 7) {
   y_file_path <- "config/project_config.yml"
   config_file <- yaml.load_file(y_file_path)
   save_dir = config_file$analysis_paths$diff_exp
-  ggsave(paste0(save_dir, "/", filename, width = width, height = height))
+  ggsave(paste0(save_dir, "/", filename), width = width, height = height)
 }
 
 

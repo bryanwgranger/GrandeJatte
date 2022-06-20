@@ -189,7 +189,6 @@ SaveVizDE <- function(filename, plot = last_plot(), width = 7, height = 7) {
   config_file <- yaml.load_file(y_file_path)
   save_dir = config_file$analysis_paths$diff_exp
   ggsave(paste0(save_dir, "/", filename, width = width, height = height))
-  
 }
 
 

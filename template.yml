@@ -1,0 +1,24 @@
+base_fields:
+  - project_title
+  - home_directory
+  - project_directory
+  - samples
+  - most_recent_seurat
+main_paths:
+  - main_analysis
+  - config
+  - input_path
+  - scripts
+  - seurat_objects
+  - random_folder
+  - random_different_folder
+analysis_paths:
+  - cell_type
+  - differential_expression
+  - viz_qc
+  - viz_clustering
+  - trajectory
+  - markers
+  - other
+
+

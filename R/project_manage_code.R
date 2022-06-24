@@ -58,6 +58,9 @@ CreateProjectDirectory <- function(project_title, home_directory, template_file_
     if(!dir.exists(directory)){dir.create(directory,recursive = T)} 
   }
   
+  #add path to global template file (for colors, settings, etc.)
+  new_config[['config_path']] <- template_file_path
+  
   #save as a new YAML file
   config_dir <- new_config[['main_paths']][['config']]
   write_yaml(new_config, file = paste0(config_dir, "/project_config.yml"))

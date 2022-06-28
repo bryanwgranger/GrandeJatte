@@ -1,4 +1,7 @@
 notebook*
+granger*
+grandejatte_template.yml
+scGateDB*
 
 *.Rproj
 .Rbuildignore

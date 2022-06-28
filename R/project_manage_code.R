@@ -18,7 +18,14 @@
 CreateProjectDirectory <- function(project_title, home_directory, template_file_path) {
 
   template_file <- yaml.load_file(template_file_path)
+  #check template file for project - and add if not there
   
+  if (project_title %in% names(template_file$projects)) {
+    stop('Project with that name exists.')
+  } else {
+    template_file$projects[[project_title]] <- paste0(home_directory, "/", project_title)
+    write_yaml(template_file, template_file_path)
+  }
   new_config = list()
   
   # Start with base_fields
@@ -60,7 +67,7 @@ CreateProjectDirectory <- function(project_title, home_directory, template_file_
   
   #add path to global template file (for colors, settings, etc.)
   new_config[['config_path']] <- template_file_path
-  
+
   #save as a new YAML file
   config_dir <- new_config[['main_paths']][['config']]
   write_yaml(new_config, file = paste0(config_dir, "/project_config.yml"))
@@ -68,20 +75,25 @@ CreateProjectDirectory <- function(project_title, home_directory, template_file_
   cat("Project directory created.")
 }
 
-#' Create a default template
-#'
+#' Create a default global template for a home directory
+#' This should be run once when GrandeJatte is installed
+#' 
 #' @param home_directory A file path
 #' @importFrom yaml write_yaml
 #' @examples
-#' CreateTemplate("/Users/asmith01/projects")
-#' CreateTemplate("~/projects")
+#' CreateGlobalTemplate("/Users/asmith01/projects")
+#' CreateGlobalTemplate("~/projects")
 #' @export
-CreateTemplate <- function(home_directory){
+CreateGlobalTemplate <- function(home_directory){
+  if (file.exists(paste0(home_directory, "/grandejatte_template.yml"))) {
+    stop('A global template file already exists at:', home_directory, "/grandejatte_template.yml")
+  }
   default_template = list(
     base_fields = list('project_title', 'home_directory', 'project_directory', 'samples', 'most_recent_seurat'),
     main_paths = list('main_analysis', 'config', 'input_path', 'scripts', 'seurat_objects'),
     analysis_paths = list('cell_type', 'differential_expression', 'viz_qc', 'viz_clustering',
-                          'trajectory', 'markers', 'other'))
+                          'trajectory', 'markers', 'other'),
+    projects = list())
   write_yaml(default_template, file = paste0(home_directory, "/grandejatte_template.yml"))
   cat("Template YML file written to ", home_directory, "/grandejatte_template.yml")
 }
@@ -91,6 +103,27 @@ CreateTemplate <- function(home_directory){
 #  data <- yaml.load_file(y_file_path)
 #  return(data)
 #}
+
+#' Sets the current project
+#'
+#' @param project_title The project title - this should be found in the global template file
+#' @importFrom yaml yaml.load_file
+#' @return NULL
+#' @examples
+#' SetProject('granger')
+SetProject <- function(project_title, home_directory) {
+  template_file_path <- paste0(home_directory, "/grandejatte_template.yml")
+  if(file.exists(template_file_path)){
+    template_file <- yaml.load_file(template_file_path)
+  } else {
+    stop('Cannot find global template file.')
+  }
+  if(project_title %in% names(template_file$projects)) {
+    setwd(template_file$projects[[project_title]])
+  } else {
+    stop('This project does not exist in the global template file.')
+  }
+}
 
 #' Saves a Seurat object to the predefined directory
 #'
